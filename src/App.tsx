@@ -3,6 +3,7 @@ import Calendar, { SelectEvent } from "@atlaskit/calendar";
 import { useAppDispatch } from "./app/hooks";
 import { select } from "./features/dater/daterSlice";
 import { RelativeDay } from "./components/RelativeDay/RelativeDay";
+import { Holidays } from "./components/Holidays/Holidays";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -13,12 +14,16 @@ function App() {
 
   return (
     <>
-      <Calendar
-        onSelect={(e: SelectEvent) =>
-          selectDate(new Date(e.iso).toDateString())
-        }
-      />
-      <RelativeDay/>
+      <div className="container">
+        <Calendar
+          onSelect={(e: SelectEvent) =>
+            selectDate(new Date(e.iso).toDateString())
+          }
+          className="calendar"
+        />
+        <RelativeDay />
+        <Holidays />
+      </div>
     </>
   );
 }
