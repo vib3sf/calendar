@@ -2,27 +2,32 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { getHolidaysByDate } from "../../services/holidays/holidays.api";
-import "./Holidays.css"
+import "./Holidays.css";
+import { useAppDispatch } from "../../app/hooks";
+import { finish, update } from "../../features/holidayer/holidayerSlice";
 
 export function Holidays() {
   const [holidays, setHolidays] = useState<Array<string>>([]);
-  const [load, setLoad] = useState(false);
 
   const date = useSelector<RootState, string>(
     (state: RootState) => state.dater.value
+  );
+
+  const dispatch = useAppDispatch();
+  const load = useSelector<RootState, boolean>(
+    (state: RootState) => state.holidayer.load
   );
 
   useEffect(() => {
     const fetchHolidays = async () => {
       const fetchedHolidays = await getHolidaysByDate(new Date(date));
       setHolidays(fetchedHolidays);
-      setLoad(true);
+      dispatch(finish());
     };
 
-    setLoad(false);
+    dispatch(update());
     fetchHolidays();
-    console.log('render')
-  }, [date]);
+  }, [date, dispatch]);
 
   return (
     <div>
@@ -32,7 +37,9 @@ export function Holidays() {
             <li key={holiday}>{holiday}</li>
           ))}
         </ul>
-      ) : <p className="loading">Loading...</p>}
+      ) : (
+        <p className="loading">Loading...</p>
+      )}
     </div>
   );
 }

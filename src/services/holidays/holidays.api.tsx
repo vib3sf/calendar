@@ -1,3 +1,5 @@
+import { HolidayDTO } from "../../models/holiday.dto";
+
 export const getHolidaysByDate = async (date: Date) => {
   const response = await fetch(
     "https://api.api-ninjas.com/v1/holidays?country=US&year=2021",
@@ -11,9 +13,9 @@ export const getHolidaysByDate = async (date: Date) => {
   const holidays = await response.json();
   return holidays
     .filter(
-      (holiday) =>
+      (holiday: HolidayDTO) =>
         new Date(holiday.date).getDay() === date.getDay() &&
         new Date(holiday.date).getMonth() === date.getMonth()
     )
-    .map((holiday) => holiday.name);
+    .map((holiday: HolidayDTO) => holiday.name);
 };
