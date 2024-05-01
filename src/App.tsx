@@ -1,9 +1,8 @@
 import "./App.css";
 import Calendar, { SelectEvent } from "@atlaskit/calendar";
 import { useAppDispatch } from "./app/hooks";
-import { useSelector } from "react-redux";
-import { RootState } from "./app/store";
 import { select } from "./features/dater/daterSlice";
+import { RelativeDay } from "./components/RelativeDay/RelativeDay";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -14,12 +13,12 @@ function App() {
 
   return (
     <>
-      <Calendar onSelect={(e: SelectEvent) => selectDate(new Date(e.iso).toDateString())} />
-      <p>
-        {useSelector<RootState, string>(
-          (state: RootState) => state.dater.value
-        )}
-      </p>
+      <Calendar
+        onSelect={(e: SelectEvent) =>
+          selectDate(new Date(e.iso).toDateString())
+        }
+      />
+      <RelativeDay/>
     </>
   );
 }
