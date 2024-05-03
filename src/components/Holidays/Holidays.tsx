@@ -24,6 +24,7 @@ export function Holidays() {
   useEffect(() => {
     const fetchHolidays = async () => {
       const fetchedHolidays = await getHolidaysByDate(new Date(date));
+      console.log(fetchedHolidays)
       dispatch(finish(fetchedHolidays));
     };
 

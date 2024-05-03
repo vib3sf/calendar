@@ -12,6 +12,7 @@ export const daterSlice = createSlice({
   reducers: {
     select: (state, action) => {
       state.value = action.payload;
+      console.log('select: ' + state.value)
     },
   },
 });

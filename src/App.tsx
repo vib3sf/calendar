@@ -5,19 +5,24 @@ import { RelativeDay } from "./components/RelativeDay/RelativeDay";
 import { Holidays } from "./components/Holidays/Holidays";
 import { reselect } from "./features/holidayer/holidayerSlice";
 import { select } from "./features/dater/daterSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "./app/store";
 
 function App() {
   const dispatch = useAppDispatch();
 
-  const selectDate = (date: string) => dispatch(select(date));
+  const date = useSelector((state: RootState) => state.dater.value)
 
   return (
     <>
       <div className="container">
         <Calendar
           onSelect={(e: SelectEvent) => {
-            selectDate(new Date(e.iso).toDateString());
-            dispatch(reselect());
+            const selectedDate = new Date(e.iso).toDateString();
+            if(date !== selectedDate) {
+              dispatch(select(selectedDate))
+              dispatch(reselect());
+            }
           }}
           className="calendar"
         />
