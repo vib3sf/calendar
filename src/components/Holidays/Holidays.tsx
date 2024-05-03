@@ -33,11 +33,15 @@ export function Holidays() {
   return (
     <div>
       {load ? (
-        <ul className="holiday-list">
-          {holidays.map((holiday: HolidayDTO) => (
-            <li key={holiday.name}>{holiday.name}</li>
-          ))}
-        </ul>
+        holidays.length !== 0 ? (
+          <ul className="holiday-list">
+            {holidays.map((holiday: HolidayDTO) => (
+              <li key={holiday.name}>{holiday.name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>There aren't holidays on this day</p>
+        )
       ) : (
         <p className="loading">Loading...</p>
       )}

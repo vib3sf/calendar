@@ -1,6 +1,7 @@
 export const getRelativeDay = (date: Date): string => {
   const dayDifference = Math.floor(
-    (new Date(date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) + 1
+    (new Date(date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24) +
+      1
   );
 
   switch (dayDifference) {
