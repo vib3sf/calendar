@@ -8,6 +8,7 @@ import { finish } from "../../features/holidayer/holidayerSlice";
 import { HolidayDTO } from "../../models/holiday.dto";
 
 export function Holidays() {
+  const dispatch = useAppDispatch();
   const date = useSelector<RootState, string>(
     (state: RootState) => state.dater.value
   );
@@ -16,7 +17,6 @@ export function Holidays() {
     (state: RootState) => state.holidayer.holidays
   );
 
-  const dispatch = useAppDispatch();
   const load = useSelector<RootState, boolean>(
     (state: RootState) => state.holidayer.load
   );
