@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { getHolidaysByDate } from "../../services/holidays/holidays.api";
 import "./Holidays.css";
 import { useAppDispatch } from "../../app/hooks";
-import { finish, update } from "../../features/holidayer/holidayerSlice";
+import { finish } from "../../features/holidayer/holidayerSlice";
+import { HolidayDTO } from "../../models/holiday.dto";
 
 export function Holidays() {
-  const [holidays, setHolidays] = useState<Array<string>>([]);
-
   const date = useSelector<RootState, string>(
     (state: RootState) => state.dater.value
+  );
+
+  const holidays = useSelector<RootState, Array<HolidayDTO>>(
+    (state: RootState) => state.holidayer.holidays
   );
 
   const dispatch = useAppDispatch();
@@ -21,11 +24,9 @@ export function Holidays() {
   useEffect(() => {
     const fetchHolidays = async () => {
       const fetchedHolidays = await getHolidaysByDate(new Date(date));
-      setHolidays(fetchedHolidays);
-      dispatch(finish());
+      dispatch(finish(fetchedHolidays));
     };
 
-    dispatch(update());
     fetchHolidays();
   }, [date, dispatch]);
 
@@ -33,8 +34,8 @@ export function Holidays() {
     <div>
       {load ? (
         <ul className="holiday-list">
-          {holidays.map((holiday: string) => (
-            <li key={holiday}>{holiday}</li>
+          {holidays.map((holiday: HolidayDTO) => (
+            <li key={holiday.name}>{holiday.name}</li>
           ))}
         </ul>
       ) : (

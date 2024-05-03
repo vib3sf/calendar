@@ -1,8 +1,7 @@
 export const getRelativeDay = (date: Date): string => {
-  const dayDifference =
-    Math.round(
-      (new Date(date).valueOf() - new Date().valueOf()) / (1000 * 60 * 60 * 24)
-    ) + 1;
+  const dayDifference = Math.round(
+    (new Date(date).valueOf() - new Date().valueOf()) / (1000 * 60 * 60 * 24)
+  );
 
   switch (dayDifference) {
     case 0:
